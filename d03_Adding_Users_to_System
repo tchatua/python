@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+import os
+
+os.system("clear")
+userlist = ["alpha", "beta", "gamma"]
+print("\nAdding user to system\n")
+# Loop to add user from user list
+for user in userlist:
+    exitcode = os.system("id {}".format(user))
+    if exitcode != 0:
+        print(f"\nUser {user} does not exist. Adding it.")
+        os.system("useradd {}".format(user))
+    else:
+        print(f"User already exist, skipping it.\n")
+#Condition to check if group exists or not, add if not exist
+exitcode = os.system("grep science /etc/group")
+if exitcode != 0:
+    print(f"\nGroup science do not exist. Adding it")
+    os.system("groupadd science")
+else:
+    print(f"\nGroup already exist, skipping it.")
+# Adding user to group
+for user in userlist:
+    print(f"\nAdding user {user} in the science group")
+    os.system("usermod -aG science {}".format(user)) 
+
+
